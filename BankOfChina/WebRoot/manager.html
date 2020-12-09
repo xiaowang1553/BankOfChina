@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style>
+		html{
+			width:680px;
+			height:340px;
+		}
+		body{
+			width:680px;
+		}
+		div#wrapper{
+			text-align:center;
+			text-align:-webkit-center;
+			text-align:-moz-center;
+
+			overflow:hidden;
+		}
+		label{
+			line-height:50px;
+		}
+		input{
+			border-style:solid;
+		}
+		input.focus{
+			border-radius:3px;
+		}
+		div.comment{
+			font-size:10px;
+			position:relative;
+		}
+		div.comment#c1{
+			left:45px;
+			top:-10px;
+		}
+		div.comment#c2{
+			left:20px;
+			top:-10px;
+		}
+		div#loginWrapper{
+			text-align:center;
+			text-align:-webkit-center;
+			text-align:-moz-center;
+
+		}
+		a#login{
+			display:block;
+			width:108px;
+			height:36px;
+			border-radius:5px;
+			position:relative;
+		}
+		span#loginSpan{
+			font-size:20px;
+			line-height:36px;
+			position:absolute;
+			left:40px;
+			color:#4C5A65;
+		}
+		div#managerAlert,div#pwdAlert{
+				display:none;
+				float:right;
+				position:relative;
+				right:40px;
+				color:red;
+				font-size:10px;
+				width:160px;
+				height:60px;
+				padding-left:10px;
+				padding-right:10px;
+				background-color:#fffec4;
+				font-size:13px;
+				text-align:left;
+			}
+		label{
+			display:inline-block;
+		}
+		img#correctManager{
+			display:none;
+			vertical-align:middle;
+			position: relative;
+			left:10px;
+		}
+		img#correctPwd{
+			display:none;
+			vertical-align:middle;
+			position: relative;
+			left:10px;
+		}
+	</style>
+</head>
+<body>
+	<div id = "wrapper">
+		<form action="http://www.baidu.com" method="post" target="_top">
+			<label for="managerInput">管理员账号 : </label>&nbsp;&nbsp;&nbsp;
+			<input type="text" id = "managerInput" name="id"><img src="imgs/timg.jpg" height = "26px" id = "correctManager" class = "correct"/>
+			<div id = "managerAlert">
+				请输入正确的管理员账号，不允许有非数字字符
+			</div>
+			<br />
+			<div class = "comment" id = "c1">请输入有效的管理员账号</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="pwdInput">密码 : </label>&nbsp;&nbsp;&nbsp;
+			<input type="password" name = "password" id = "pwdInput"><img src="imgs/timg.jpg" height = "26px" id = "correctPwd" class = "correct"/>
+			<div id = "pwdAlert">
+				请输入正确的密码，要求长度大于6位且小于18位
+			</div><br />
+			<div class = "comment" id = "c2">账号密码区分大小写</div><br />
+			<div id = "loginWrapper">
+				<a href = "javascript:;" id = "login"><img src="imgs/login_btn.png" height="36" width="108" alt=""><span id = "loginSpan">登录</span></a>
+			</div>
+		</form>
+	</div>
+	<script src = "jquery.js"></script>
+		<script>
+			var managerInput = document.getElementById("managerInput");
+			var pwdInput = document.getElementById("pwdInput");
+			var loginAnchor = document.getElementById("login");
+			var managerAlert = document.getElementById("managerAlert");
+			var pwdAlert = document.getElementById("pwdAlert");
+			var submitAnchor = document.getElementById("login");
+
+			if(managerInput.addEventListener){
+				managerInput.addEventListener("focus",function(){
+					$(this).addClass("focus");
+					document.getElementById("c1").style.color = "#970100";
+				},false);
+				managerInput.addEventListener("blur",function(){
+					$(this).removeClass("focus");
+					document.getElementById("c1").style.color = "black";
+				});
+				managerInput.addEventListener("change",function(){
+					var value = this.value;
+					if(/[^0-9]/.test(value) || /^0/.test(value)){
+						managerAlert.style.display = "block";
+						managerInput.style.transform = "translate(55px)";
+						managerInput.style.borderColor = "#8B0000";
+						document.getElementsByTagName("label")[0].style.transform = "translate(55px)";
+						document.getElementById("c1").style.transform = "translate(50px)";
+						document.getElementById("correctManager").style.display = "none";
+					}else{
+						managerAlert.style.display = "none";
+						managerInput.style.transform = "none";
+						managerInput.style.borderColor = "black";
+						document.getElementsByTagName("label")[0].style.transform = "none";
+						document.getElementById("c1").style.transform = "none";
+						document.getElementById("correctManager").style.display = "inline-block";
+					}
+				},false);
+			}else{
+				managerInput.attachEvent("onfocus", function(){
+					$(managerInput).addClass("focus");
+					document.getElementById("c1").style.color = "#970100";
+				});
+				managerInput.attachEvent("onblur", function(){
+					$(managerInput).removeClass("focus");
+					document.getElementById("c1").style.color = "black";
+				})
+				managerInput.attachEvent("onchange",function(){
+					var value = managerInput.value;
+					if(/[^0-9]/.test(value) || /^0/.test(value)){
+						managerAlert.style.display = "block";
+						managerInput.style.transform = "translate(55px)";
+						managerInput.style.borderColor = "#8B0000";
+						document.getElementsByTagName("label")[0].style.transform = "translate(55px)";
+						document.getElementById("c1").style.transform = "translate(50px)";
+						document.getElementById("correctManager").style.display = "none";
+					}else{
+						managerAlert.style.display = "none";
+						managerInput.style.transform = "none";
+						managerInput.style.borderColor = "black";
+						document.getElementsByTagName("label")[0].style.transform = "none";
+						document.getElementById("c1").style.transform = "none";
+						document.getElementById("correctManager").style.display = "inline-block";
+					}
+				});
+			}
+			if(pwdInput.addEventListener){
+				pwdInput.addEventListener("focus",function(){
+					$(this).addClass("focus");
+					document.getElementById("c2").style.color = "#970100";
+				},false);
+				pwdInput.addEventListener("blur",function(){
+					$(this).removeClass("focus");
+					document.getElementById("c2").style.color = "black";
+				});
+				pwdInput.addEventListener("change",function(){
+					var value = this.value;
+					if(value.length < 6 || value.length > 18){
+						pwdAlert.style.display = "block";
+						pwdInput.style.transform = "translate(55px)";
+						pwdInput.style.borderColor = "#8B0000";
+						document.getElementsByTagName("label")[1].style.transform = "translate(55px)";
+						document.getElementById("c2").style.transform = "translate(50px)";
+						document.getElementById("correctPwd").style.display = "none";
+					}else{
+						pwdAlert.style.display = "none";
+						pwdInput.style.transform = "none";
+						pwdInput.style.borderColor = "black";
+						document.getElementsByTagName("label")[1].style.transform = "none";
+						document.getElementById("c2").style.transform = "none";
+						document.getElementById("correctPwd").style.display = "inline-block";
+					}
+				},false);
+			}else{
+				pwdInput.attachEvent("onfocus", function(){
+					$(pwdInput).addClass("focus");
+					document.getElementById("c2").style.color = "#970100";
+				});
+				pwdInput.attachEvent("onblur", function(){
+					$(pwdInput).removeClass("focus");
+					document.getElementById("c2").style.color = "black";
+				});
+				pwdInput.attachEvent("onchange", function(){
+					var value = pwdInput.value;
+					if(value.length < 6 || value.length > 18){
+						pwdAlert.style.display = "block";
+						pwdInput.style.transform = "translate(55px)";
+						pwdInput.style.borderColor = "#8B0000";
+						document.getElementsByTagName("label")[1].style.transform = "translate(55px)";
+						document.getElementById("c2").style.transform = "translate(50px)";
+						document.getElementById("correctPwd").style.display = "none";
+					}else{
+						pwdAlert.style.display = "none";
+						pwdInput.style.transform = "none";
+						pwdInput.style.borderColor = "black";
+						document.getElementsByTagName("label")[1].style.transform = "none";
+						document.getElementById("c2").style.transform = "none";
+						document.getElementById("correctPwd").style.display = "inline-block";
+					}
+				});
+			}
+			if(loginAnchor.addEventListener){
+				loginAnchor.addEventListener("mouseenter",function(){
+					this.firstChild.src = "imgs/login_btn_hover.png";
+				},false);
+				loginAnchor.addEventListener("mouseleave",function(){
+					this.firstChild.src = "imgs/login_btn.png";
+				},false);
+			}else{
+				loginAnchor.attachEvent("onmouseenter",function(){
+					loginAnchor.firstChild.src = "imgs/login_btn_hover.png";
+				});
+				loginAnchor.attachEvent("onmouseleave",function(){
+					loginAnchor.firstChild.src = "imgs/login_btn.png";
+				});
+			}
+			if(submitAnchor.addEventListener){
+				submitAnchor.addEventListener("click",function(){
+					if(document.getElementsByClassName)
+						var alertCollection = document.getElementsByClassName("correct");
+					else
+						var alertCollection = document.querySelectorAll(".correct");
+					for(var i in alertCollection){
+						if(!isNaN(Number(i))){
+							if(window.getComputedStyle){
+								if(getComputedStyle(alertCollection[i],null).display == "none"){
+									alert("请重新输入");
+									return ;
+								}
+							}else{
+								if(alertCollection[i].currentStyle.display == "none"){
+									alert("请重新输入");
+									return ;
+								}
+							}
+						}
+					}
+					document.forms[0].submit();
+				},false);
+			}else{
+				submitAnchor.attachEvent("onclick",function(){
+					if(document.getElementsByClassName)
+						var alertCollection = document.getElementsByClassName("correct");
+					else
+						var alertCollection = document.querySelectorAll(".correct");
+					for(var i in alertCollection){
+						if(!isNaN(Number(i))){
+							if(window.getComputedStyle){
+								if(getComputedStyle(alertCollection[i],null).display == "none"){
+									alert("请重新输入");
+									return ;
+								}
+							}else{
+								if(alertCollection[i].currentStyle.display == "none"){
+									alert("请重新输入");
+									return ;
+								}
+							}
+						}
+					}
+					document.forms[0].submit();
+				});
+			}
+		</script>
+</body>
+</html>
